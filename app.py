@@ -8,6 +8,7 @@ from dash import Dash, dcc, html, Input, Output
 
 style_sheeet = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = Dash(__name__, external_stylesheets= style_sheeet)
+server = app.server
 
 df = pd.read_csv("https://raw.githubusercontent.com/deepankarck2/Final-Project-474/main/rainfall_trend_in_flood_risky_countries.csv")
 
