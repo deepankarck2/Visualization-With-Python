@@ -2,163 +2,177 @@
 <html>
   <head>
     <title>CSC474: Group 1 Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.21.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.2"></script>
   </head>
   <body style="text-align: center;">
     <h1>CSC 474: Group 1 Visualizations</h1>
-    <h2>Links for our visalization:</h2>
-    <div style="display: flex; flex-direction: row;">
-      <a href="./part1.html">HUSSAM</a>
-      <a href="./part2.html">LUCAS</a>
-      <a href="https://group-1-474.herokuapp.com/">HUSSAM</a>
-      <a href="./part3.html">HUSSAM</a>
+    <h2>The effect of carbon dioxide on crop yield</h2>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap;margin: 20px;">
+      <a href="./part1.html" style="margin: 20px;">
+        <h2>Projected yields of major crops</h2>
+        <h3>HUSSAM</h3>
+      </a>
+      <a href="./part2.html" style="margin: 20px;">
+        <h2>The effect of carbon dioxide on crop yield</h2>
+        <h3>Lucas</h3></a>
+      <a href="https://group-1-474.herokuapp.com/" style="margin: 20px;" >
+        <h2>Surprise Map of Countries being Affected by Rainfall</h2>
+        <h3>Deepankar</h3>
+      </a>
+      <a href="./part3.html" style="margin: 20px;">
+        <h2>Effects of climate change on RICE plantations in the Caribbean.</h2>
+        <h3>Raynel</h3>
+      </a>
     </div>
-    <div id="vis" style="text-align: center"></div>
+    <div id="vis" style="text-align: center"> </div>
     <script type="text/javascript">
       var yourVlSpec = {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {
-    "url": "https://raw.githubusercontent.com/chunxianlin/CSC474/main/crops-yield-changes-hadcm3-sres.csv"
-  },
-  "transform": [{"filter": {"field": "Crop_2000", "gt": 12000000}}],
-  "vconcat": [
-    {
-      "mark": "point",
-      "title": "Crop Yield Baseline",
-      "encoding": {
-        "x": {
-          "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
-          "type": "nominal",
-          "title": "Countries"
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "data": {
+          "url": "https://raw.githubusercontent.com/chunxianlin/CSC474/main/crops-yield-changes-hadcm3-sres.csv"
         },
-        "y": {
-          "field": "Crop_2000",
-          "type": "quantitative",
-          "title": "Crop Yield Baseline (2000)"
-        },
-        "color": {
-          "condition": {
-            "param": "brush",
-            "title": "Countries",
-            "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
-            "type": "nominal"
+        "transform": [{"filter": {"field": "Crop_2000", "gt": 12000000}}],
+        "vconcat": [
+          {
+            "mark": "point",
+            "title": "Crop Yield Baseline",
+            "encoding": {
+              "x": {
+                "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+                "type": "nominal",
+                "title": "Countries"
+              },
+              "y": {
+                "field": "Crop_2000",
+                "type": "quantitative",
+                "title": "Crop Yield Baseline (2000)"
+              },
+              "color": {
+                "condition": {
+                  "param": "brush",
+                  "title": "Countries",
+                  "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+                  "type": "nominal"
+                },
+                "value": "black"
+              }
+            },
+            "params": [
+              {
+                "name": "brush",
+                "select": {"type": "interval", "encodings": ["x", "y"]}
+              },
+              {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+            ],
+            "transform": [{"filter": {"param": "click"}}]
           },
-          "value": "black"
-        }
-      },
-      "params": [
-        {
-          "name": "brush",
-          "select": {"type": "interval", "encodings": ["x", "y"]}
-        },
-        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
-      ],
-      "transform": [{"filter": {"param": "click"}}]
-    },
-    {
-      "mark": "bar",
-      "title": "Crop Yield Change in 2020",
-      "encoding": {
-        "x": {
-          "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
-          "type": "nominal",
-          "title": "Countries"
-        },
-        "y": {
-          "field": "Crop_A2_2020",
-          "type": "quantitative",
-          "scale": {"domain": [-40, 40]},
-          "title": "Crop Yield Change (2020)"
-        },
-        "color": {
-          "condition": {
-            "param": "brush",
-            "title": "Countries",
-            "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
-            "type": "nominal"
+          {
+            "mark": "bar",
+            "title": "Crop Yield Change in 2020",
+            "encoding": {
+              "x": {
+                "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+                "type": "nominal",
+                "title": "Countries"
+              },
+              "y": {
+                "field": "Crop_A2_2020",
+                "type": "quantitative",
+                "scale": {"domain": [-40, 40]},
+                "title": "Crop Yield Change (2020)"
+              },
+              "color": {
+                "condition": {
+                  "param": "brush",
+                  "title": "Countries",
+                  "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+                  "type": "nominal"
+                },
+                "value": "black"
+              }
+            },
+            "params": [
+              {
+                "name": "brush",
+                "select": {"type": "interval", "encodings": ["x", "y"]}
+              },
+              {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+            ],
+            "transform": [{"filter": {"param": "click"}}]
           },
-          "value": "black"
-        }
-      },
-      "params": [
-        {
-          "name": "brush",
-          "select": {"type": "interval", "encodings": ["x", "y"]}
-        },
-        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
-      ],
-      "transform": [{"filter": {"param": "click"}}]
-    },
-    {
-      "mark": "bar",
-      "title": "Crop Yield Change in 2050",
-      "encoding": {
-        "x": {
-          "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
-          "type": "nominal",
-          "title": "Countries"
-        },
-        "y": {
-          "field": "Crop_A2_2050",
-          "type": "quantitative",
-          "scale": {"domain": [-40, 40]},
-          "title": "Crop Yield Change (2050)"
-        },
-        "color": {
-          "condition": {
-            "param": "brush",
-            "title": "Countries",
-            "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
-            "type": "nominal"
+          {
+            "mark": "bar",
+            "title": "Crop Yield Change in 2050",
+            "encoding": {
+              "x": {
+                "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+                "type": "nominal",
+                "title": "Countries"
+              },
+              "y": {
+                "field": "Crop_A2_2050",
+                "type": "quantitative",
+                "scale": {"domain": [-40, 40]},
+                "title": "Crop Yield Change (2050)"
+              },
+              "color": {
+                "condition": {
+                  "param": "brush",
+                  "title": "Countries",
+                  "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+                  "type": "nominal"
+                },
+                "value": "black"
+              }
+            },
+            "params": [
+              {
+                "name": "brush",
+                "select": {"type": "interval", "encodings": ["x", "y"]}
+              },
+              {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+            ],
+            "transform": [{"filter": {"param": "click"}}]
           },
-          "value": "black"
-        }
-      },
-      "params": [
-        {
-          "name": "brush",
-          "select": {"type": "interval", "encodings": ["x", "y"]}
-        },
-        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
-      ],
-      "transform": [{"filter": {"param": "click"}}]
-    },
-    {
-      "mark": "bar",
-      "title": "Crop Yield Change in 2080",
-      "encoding": {
-        "x": {
-          "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
-          "type": "nominal",
-          "title": "Countries"
-        },
-        "y": {
-          "field": "Crop_A2_2080",
-          "type": "quantitative",
-          "scale": {"domain": [-40, 40]},
-          "title": "Crop Yield Change (2080)"
-        },
-        "color": {
-          "condition": {
-            "param": "brush",
-            "title": "Countries",
-            "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
-            "type": "nominal"
-          },
-          "value": "black"
-        }
-      },
-      "params": [
-        {
-          "name": "brush",
-          "select": {"type": "interval", "encodings": ["x", "y"]}
-        },
-        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
-      ],
-      "transform": [{"filter": {"param": "click"}}]
-    }
-  ],
-  "config": {}
-};
+          {
+            "mark": "bar",
+            "title": "Crop Yield Change in 2080",
+            "encoding": {
+              "x": {
+                "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+                "type": "nominal",
+                "title": "Countries"
+              },
+              "y": {
+                "field": "Crop_A2_2080",
+                "type": "quantitative",
+                "scale": {"domain": [-40, 40]},
+                "title": "Crop Yield Change (2080)"
+              },
+              "color": {
+                "condition": {
+                  "param": "brush",
+                  "title": "Countries",
+                  "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+                  "type": "nominal"
+                },
+                "value": "black"
+              }
+            },
+            "params": [
+              {
+                "name": "brush",
+                "select": {"type": "interval", "encodings": ["x", "y"]}
+              },
+              {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+            ],
+            "transform": [{"filter": {"param": "click"}}]
+          }
+        ],
+        "config": {}
+      };
       vegaEmbed('#vis', yourVlSpec);
     </script>
   </body>
