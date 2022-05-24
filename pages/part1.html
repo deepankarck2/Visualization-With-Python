@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.21.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.2"></script>
+  </head>
+  <body>
+    <div id="vis" style="text-align: center"></div>
+
+    <script type="text/javascript">
+      var yourVlSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/hMRZQ21/Vis/main/Projected_impacts_datasheet_11.24.2021.csv"
+  },
+  "vconcat": [
+    {
+      "mark": "bar",
+      "width": 950,
+      "height": 350,
+      "encoding": {
+        "x": {
+          "field": "Baseline_Mid-point",
+          "type": "nominal",
+          "title": "Year"
+        },
+        "y": {
+          "field": "Projected yield (t/ha)",
+          "type": "quantitative",
+          "aggregate": "average",
+          "title": "Average Yields (Tons/ Hectare)"
+        },
+        "color": {
+          "condition": {"param": "brush", "field": "Crop", "type": "nominal"},
+          "value": "gray"
+        }
+      },
+      "params": [
+        {
+          "name": "brush",
+          "select": {"type": "interval", "encodings": ["x", "y"]}
+        },
+        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+      ],
+      "transform": [{"filter": {"param": "click"}}]
+    },
+    {
+      "mark": "rect",
+      "width": 950,
+      "height": 350,
+      "encoding": {
+        "x": {
+          "field": "Future_Mid-point",
+          "type": "nominal",
+          "title": "Future Years"
+        },
+        "y": {
+          "field": "Projected yield (t/ha)",
+          "type": "quantitative",
+          "aggregate": "average",
+          "title": "Projected Average Yields (Tons/ Hectare)",
+          "scale": {"domain": [0, 20]}
+        },
+        "color": {
+          "condition": {"param": "click", "field": "Crop", "type": "nominal"},
+          "value": "gray"
+        }
+      },
+      "params": [
+        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+      ],
+      "transform": [
+        {"filter": {"param": "brush"}},
+        {"filter": {"param": "click"}}
+      ]
+    },
+    {
+      "mark": "circle",
+      "width": 950,
+      "height": 350,
+      "encoding": {
+        "x": {
+          "field": "Global delta T from pre-industrial period ",
+          "title": "Change in Temp from pre-industrial time",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "CO2 ppm",
+          "type": "quantitative",
+          "aggregate": "average",
+          "title": "CO2 (ppm)"
+        },
+        "color": {"field": "Crop"},
+        "size": {
+          "field": "Projected yield (t/ha)",
+          "aggregate": "average",
+          "title": "Yield (Tons/ Hectare)"
+        }
+      },
+      "transform": [
+        {"filter": {"param": "brush"}},
+        {"filter": {"param": "click"}}
+      ]
+    }
+  ],
+  "config": {}
+};
+      vegaEmbed('#vis', yourVlSpec);
+    </script>
+  </body>
+</html>
