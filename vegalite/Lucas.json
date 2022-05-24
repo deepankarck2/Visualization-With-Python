@@ -1,0 +1,145 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/chunxianlin/CSC474/main/crops-yield-changes-hadcm3-sres.csv"
+  },
+  "transform": [{"filter": {"field": "Crop_2000", "gt": 12000000}}],
+  "vconcat": [
+    {
+      "mark": "point",
+      "title": "Crop Yield Baseline",
+      "encoding": {
+        "x": {
+          "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+          "type": "nominal",
+          "title": "Countries"
+        },
+        "y": {
+          "field": "Crop_2000",
+          "type": "quantitative",
+          "title": "Crop Yield Baseline (2000)"
+        },
+        "color": {
+          "condition": {
+            "param": "brush",
+            "title": "Countries",
+            "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+            "type": "nominal"
+          },
+          "value": "black"
+        }
+      },
+      "params": [
+        {
+          "name": "brush",
+          "select": {"type": "interval", "encodings": ["x", "y"]}
+        },
+        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+      ],
+      "transform": [{"filter": {"param": "click"}}]
+    },
+    {
+      "mark": "bar",
+      "title": "Crop Yield Change in 2020",
+      "encoding": {
+        "x": {
+          "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+          "type": "nominal",
+          "title": "Countries"
+        },
+        "y": {
+          "field": "Crop_A2_2020",
+          "type": "quantitative",
+          "scale": {"domain": [-40, 40]},
+          "title": "Crop Yield Change (2020)"
+        },
+        "color": {
+          "condition": {
+            "param": "brush",
+            "title": "Countries",
+            "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+            "type": "nominal"
+          },
+          "value": "black"
+        }
+      },
+      "params": [
+        {
+          "name": "brush",
+          "select": {"type": "interval", "encodings": ["x", "y"]}
+        },
+        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+      ],
+      "transform": [{"filter": {"param": "click"}}]
+    },
+    {
+      "mark": "bar",
+      "title": "Crop Yield Change in 2050",
+      "encoding": {
+        "x": {
+          "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+          "type": "nominal",
+          "title": "Countries"
+        },
+        "y": {
+          "field": "Crop_A2_2050",
+          "type": "quantitative",
+          "scale": {"domain": [-40, 40]},
+          "title": "Crop Yield Change (2050)"
+        },
+        "color": {
+          "condition": {
+            "param": "brush",
+            "title": "Countries",
+            "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+            "type": "nominal"
+          },
+          "value": "black"
+        }
+      },
+      "params": [
+        {
+          "name": "brush",
+          "select": {"type": "interval", "encodings": ["x", "y"]}
+        },
+        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+      ],
+      "transform": [{"filter": {"param": "click"}}]
+    },
+    {
+      "mark": "bar",
+      "title": "Crop Yield Change in 2080",
+      "encoding": {
+        "x": {
+          "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+          "type": "nominal",
+          "title": "Countries"
+        },
+        "y": {
+          "field": "Crop_A2_2080",
+          "type": "quantitative",
+          "scale": {"domain": [-40, 40]},
+          "title": "Crop Yield Change (2080)"
+        },
+        "color": {
+          "condition": {
+            "param": "brush",
+            "title": "Countries",
+            "field": "BLS_2_Countries_(SRES)_ABBREVNAME",
+            "type": "nominal"
+          },
+          "value": "black"
+        }
+      },
+      "params": [
+        {
+          "name": "brush",
+          "select": {"type": "interval", "encodings": ["x", "y"]}
+        },
+        {"name": "click", "select": {"type": "point", "encodings": ["color"]}}
+      ],
+      "transform": [{"filter": {"param": "click"}}]
+    }
+  ],
+  "config": {}
+}
